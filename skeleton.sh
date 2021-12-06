@@ -42,24 +42,26 @@ echo "  Done"
 # sample results
 echo "  Setting up results to sample input"
 PART_1_OUTPUT="${DAY_DIR}/part1_sample.out"
+echo "    Part 1"
 if [ -f "${PART_1_OUTPUT}" ]; then
-    echo "    Part 1 output file already exists, reading value from ${PART_1_OUTPUT}"
+    echo "      Output file already exists, reading value from ${PART_1_OUTPUT}"
     PART_1_SAMPLE_RESULT=$(cat "${PART_1_OUTPUT}")
-    echo "    Expected result for Part 1 using sample input is: ${PART_1_SAMPLE_RESULT}"
+    echo "      Expected result when using sample input is: ${PART_1_SAMPLE_RESULT}"
 else
-    read -p "    Enter the result expected from Part 1, using the sample input: " PART_1_SAMPLE_RESULT
+    read -p "      Enter the result expected when using the sample input: " PART_1_SAMPLE_RESULT
     echo "${PART_1_SAMPLE_RESULT}" > "${PART_1_OUTPUT}"
-    echo "    Part 1 output saved to: ${PART_1_OUTPUT}"
+    echo "    Saved to: ${PART_1_OUTPUT}"
 fi
 PART_2_OUTPUT="${DAY_DIR}/part2_sample.out"
+echo "    Part 2"
 if [ -f "${PART_2_OUTPUT}" ]; then
-    echo "    Part 2 output file already exists, reading value from ${PART_2_OUTPUT}"
+    echo "      Output file already exists, reading value from ${PART_2_OUTPUT}"
     PART_2_SAMPLE_RESULT=$(cat "${PART_2_OUTPUT}")
-    echo "    Expected result for Part 2 using sample input is: ${PART_2_SAMPLE_RESULT}"
+    echo "      Expected result when using sample input is: ${PART_2_SAMPLE_RESULT}"
 else
-    read -p "    Enter the result expected from Part 2, using the sample input (use '-' if unknown): " PART_2_SAMPLE_RESULT
+    read -p "      Enter the result expected when using the sample input (use '-' if unknown): " PART_2_SAMPLE_RESULT
     echo "${PART_2_SAMPLE_RESULT}" > "${PART_2_OUTPUT}"
-    echo "    Part 2 output saved to: ${PART_2_OUTPUT}"
+    echo "      Saved to: ${PART_2_OUTPUT}"
 fi
 echo "  Done"
 
