@@ -7,7 +7,6 @@ name = "pypi"
 
 [dev-packages]
 pytest = "*"
-pytest-testmon = "*"
 pytest-watch = "*"
 
 [requires]

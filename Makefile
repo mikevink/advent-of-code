@@ -12,11 +12,8 @@ setup:
 test:
 	python -m pipenv run pytest
 
-testmon:
-	python -m pipenv run pytest --testmon
-
 ptw:
-	python -m pipenv run ptw --runner "pytest --testmon"
+	python -m pipenv run ptw
 
 generate:
 	bash skeleton.sh $(DAY)
