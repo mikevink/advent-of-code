@@ -77,12 +77,12 @@ from aoc2021 import input
 DAY: str = "${DAY}"
 
 def part01(input_file: str) -> str:
-  lines: list[str] = input.load_lines(DAY, input_file)
-  return str(len(lines))
+    lines: list[str] = input.load_lines(DAY, input_file)
+    return str(len(lines))
 
 def part02(input_file: str) -> str:
-  lines: list[str] = input.load_lines(DAY, input_file)
-  return str(len(lines))
+    lines: list[str] = input.load_lines(DAY, input_file)
+    return str(len(lines))
 EOF
     echo "    Python file created at ${PYTHON_FILE}"
 fi
@@ -98,16 +98,16 @@ else
 from aoc2021 import day${DAY}
 
 def test_sample_day${DAY}_part01():
-  assert "${PART_1_SAMPLE_RESULT}" == day${DAY}.part01("sample")
+    assert "${PART_1_SAMPLE_RESULT}" == day${DAY}.part01("sample")
 
 def test_input_day${DAY}_part01():
-  print(day${DAY}.part01("input"))
+    print(day${DAY}.part01("input"))
 
 def test_sample_day${DAY}_part02():
-  assert "${PART_2_SAMPLE_RESULT}" == day${DAY}.part02("sample")
+    assert "${PART_2_SAMPLE_RESULT}" == day${DAY}.part02("sample")
 
 def test_input_day${DAY}_part02():
-  print(day${DAY}.part02("input"))
+    print(day${DAY}.part02("input"))
 EOF
     echo "    Test file created at ${TEST_FILE}"
 fi
