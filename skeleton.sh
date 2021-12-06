@@ -101,13 +101,15 @@ def test_sample_day${DAY}_part01():
     assert "${PART_1_SAMPLE_RESULT}" == day${DAY}.part01("sample")
 
 def test_input_day${DAY}_part01():
-    print(day${DAY}.part01("input"))
+    result: str = day${DAY}.part01("input")
+    print(f"Day ${DAY} Part 01 Result: {result}")
 
 def test_sample_day${DAY}_part02():
     assert "${PART_2_SAMPLE_RESULT}" == day${DAY}.part02("sample")
 
 def test_input_day${DAY}_part02():
-    print(day${DAY}.part02("input"))
+    result: str = day${DAY}.part02("input")
+    print(f"Day ${DAY} Part 02 Result: {result}")
 EOF
     echo "    Test file created at ${TEST_FILE}"
 fi
