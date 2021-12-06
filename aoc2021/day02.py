@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from aoc2021 import input
+from aoc2021 import error
 
 DAY: str = "02"
 
@@ -18,7 +19,7 @@ def part01(input_file: str) -> str:
         elif "down" == modifier:
             depth += value
         else:
-            return "++?????++ Out of Cheese Error. Redo From Start."
+            return error.ERROR 
     return str(position * depth)
 
 def part02(input_file: str) -> str:
@@ -37,5 +38,5 @@ def part02(input_file: str) -> str:
         elif "down" == modifier:
             aim += value
         else:
-            return "++?????++ Out of Cheese Error. Redo From Start."
+            return error.ERROR 
     return str(position * depth)

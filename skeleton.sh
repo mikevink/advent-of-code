@@ -75,16 +75,17 @@ else
 #!/usr/bin/env python
 
 from aoc2021 import input
+from aoc2021 import error
 
 DAY: str = "${DAY}"
 
 def part01(input_file: str) -> str:
     lines: list[str] = input.load_lines(DAY, input_file)
-    return str(len(lines))
+    return error.ERROR
 
 def part02(input_file: str) -> str:
     lines: list[str] = input.load_lines(DAY, input_file)
-    return str(len(lines))
+    return error.ERROR
 EOF
     echo "    Python file created at ${PYTHON_FILE}"
 fi
