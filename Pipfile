@@ -7,6 +7,8 @@ name = "pypi"
 
 [dev-packages]
 pytest = "*"
+pytest-testmon = "*"
+pytest-watch = "*"
 
 [requires]
 python_version = "3"

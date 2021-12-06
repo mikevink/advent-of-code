@@ -1,6 +1,6 @@
 TARGET=aoc2021
 
-.PHONY: $(TARGET)
+.PHONY: $(TARGET) test testmon ptw
 
 all: $(TARGET)
 
@@ -11,6 +11,12 @@ setup:
 
 test:
 	python -m pipenv run pytest
+
+testmon:
+	python -m pipenv run pytest --testmon
+
+ptw:
+	python -m pipenv run ptw --runner "pytest --testmon"
 
 generate:
 	bash skeleton.sh $(DAY)
