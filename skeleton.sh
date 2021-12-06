@@ -93,7 +93,7 @@ echo "  Done"
 
 # test file
 echo "  Setting up test file skeleton"
-TEST_FILE="${TESTS_DIR}/test_day${DAY}.py"
+TEST_FILE="${TEST_DIR}/test_day${DAY}.py"
 if [ -f "${TEST_FILE}" ]; then
     echo "    Test file already exists at ${TEST_FILE}, skipping"
 else

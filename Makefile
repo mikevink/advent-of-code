@@ -10,10 +10,16 @@ setup:
 	python -m pipenv install --dev
 
 test:
-	python -m pipenv run pytest
+	bash test.sh
+
+daytest:
+	bash test.sh -d $(DAY)
 
 ptw:
-	python -m pipenv run ptw
+	bash test.sh -w
+
+daywatch:
+	bash test.sh -w -d $(DAY)
 
 generate:
 	bash skeleton.sh $(DAY)
