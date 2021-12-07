@@ -5,10 +5,6 @@ from aoc2021 import error
 
 DAY: str = "06"
 
-def load_fish(input_file: str) -> list[int]:
-    lines: list[str] = input.load_lines(DAY, input_file)
-    return [ int(x) for x in lines[0].split(",")]
-
 class School:
     def __init__(self, initial: list[int], lifecycle: int, initial_offset: int):
         self.lifecycle: int = lifecycle - 1
@@ -36,7 +32,7 @@ class School:
         return sum(self.timers)
 
 def simulation(input_file: str, days: int) -> int:
-    school: School = School(load_fish(input_file), 7, 2)
+    school: School = School(input.load_single_csv(DAY, input_file, int), 7, 2)
     school.simulate(days)
     return school.population()
 

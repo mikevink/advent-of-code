@@ -4,11 +4,8 @@ from aoc2021 import input
 
 DAY: str = "01"
 
-def load_depths(input_file: str) -> list[int]:
-    return [int(l) for l in input.load_lines(DAY, input_file)]
-
 def part01(input_file: str) -> str:
-    depths: list[int] = load_depths(input_file)
+    depths: list[int] = input.load_lines(DAY, input_file, int) 
     a: int = depths.pop(0)
     increases: int = 0
     for b in depths:
@@ -18,7 +15,7 @@ def part01(input_file: str) -> str:
     return str(increases)
 
 def part02(input_file: str) -> str:
-    depths: list[int] = load_depths(input_file)
+    depths: list[int] = input.load_lines(DAY, input_file, int) 
     ldepths: int = len(depths)
     increases: int = 0
     for i in range(0, ldepths - 3):
