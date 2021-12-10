@@ -62,31 +62,34 @@ def map_output(output: list[str], mapping: dict[str, int]) -> int:
 
 
 def solve(patterns: list[str], output: list[str]) -> int:
-    uniques: dict[str, str] = {}
+    uniques: dict[int, str] = {}
     for pattern in patterns:
         lenp: int = len(pattern)
         if lenp in [2, 3, 4, 7]:
             uniques[lenp] = pattern
         if 4 == len(uniques):
             break
-    # keep a track of all the characters whos value we sort of know
+    # keep a track of all the characters whose value we sort of know
     known: set[str] = set()
     # 2 == len(pattern) => pattern represents number 1
     one: list[str] = list(uniques[2])
     one_options: list[dict[str, int]] = [{one[0]: 2, one[1]: 5}, {one[0]: 5, one[1]: 2}]
     known.update(one)
-    # 3 == len(pattern) => pattern represents number 7. seven shares two characters with 1, so we can ignore those, giving us one clear answer
+    # 3 == len(pattern) => pattern represents number 7.
+    #   seven shares two characters with 1, so we can ignore those, giving us one clear answer
     seven: list[str] = [c for c in uniques[3] if c not in known]
     seven_value: dict[str, int] = {seven[0]: 0}
     known.update(seven)
-    # 4 == len(pattern) => pattern represents number 4. this also shares two characters with 1, but also has two unkwnons. so same pattern
+    # 4 == len(pattern) => pattern represents number 4.
+    #   this also shares two characters with 1, but also has two unknowns. so same pattern
     four: list[str] = [c for c in uniques[4] if c not in known]
     four_options: list[dict[str, int]] = [
         {four[0]: 1, four[1]: 3},
         {four[0]: 3, four[1]: 1},
     ]
     known.update(four)
-    # 7 == len(pattern) => finally, we get to number 8. same rigamarole, remove the known ones, speculate on the unknown
+    # 7 == len(pattern) => finally, we get to number 8.
+    #   same rigamarole, remove the known ones, speculate on the unknown
     eight: list[str] = [c for c in uniques[7] if c not in known]
     eight_options: list[dict[str, int]] = [
         {eight[0]: 4, eight[1]: 6},

@@ -16,9 +16,7 @@ def parse_line(line: str) -> list[int]:
     return [int(l) for l in line]
 
 
-def check_direction(
-    heightmap: list[list[int]], x: int, y: int, direction: tuple[int, int]
-) -> bool:
+def check_direction(heightmap: list[list[int]], x: int, y: int, direction: tuple[int, int]) -> bool:
     lenx: int = len(heightmap)
     leny: int = len(heightmap[0])
     nx: int = x + direction[0]

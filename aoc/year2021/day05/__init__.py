@@ -46,9 +46,7 @@ class Walker:
         self.y = start.y
 
     def reached(self, end: Point, increment: Increment) -> bool:
-        return reached(self.x, end.x, increment.x) or reached(
-            self.y, end.y, increment.y
-        )
+        return reached(self.x, end.x, increment.x) or reached(self.y, end.y, increment.y)
 
     def step(self, increment: Increment):
         self.x += increment.x
@@ -92,7 +90,7 @@ def maximum(a: int, b: int, c: int) -> int:
 
 
 class Board:
-    def __init__(self, lines: str):
+    def __init__(self, lines: list[str]):
         self.lines: list[Line] = [Line(l) for l in lines]
         self.board: list[list[int]] = []
 
@@ -104,7 +102,7 @@ class Board:
             max_y = maximum(max_y, line.start.y, line.end.y)
         max_x += 1
         max_y += 1
-        self.board = [[0] * max_y for x in range(max_x)]
+        self.board = [[0] * max_y for _ in range(max_x)]
 
     def fill(self, inline: bool):
         for line in self.lines:

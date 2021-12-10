@@ -17,7 +17,7 @@ while getopts "d:y:" o; do
     case "${o}" in
         d)
             # pad day with 0s
-            printf -v DAY "%02d" ${OPTARG}
+            printf -v DAY "%02d" "${OPTARG}"
             ;;
         y)
             YEAR=${OPTARG}
@@ -75,7 +75,7 @@ if [ -f "${PART_1_OUTPUT}" ]; then
     PART_1_SAMPLE_RESULT=$(cat "${PART_1_OUTPUT}")
     echo "      Expected result when using sample input is: ${PART_1_SAMPLE_RESULT}"
 else
-    read -p "      Enter the result expected when using the sample input: " PART_1_SAMPLE_RESULT
+    read -r -p "      Enter the result expected when using the sample input: " PART_1_SAMPLE_RESULT
     echo "${PART_1_SAMPLE_RESULT}" > "${PART_1_OUTPUT}"
     echo "    Saved to: ${PART_1_OUTPUT}"
 fi
@@ -86,20 +86,20 @@ if [ -f "${PART_2_OUTPUT}" ]; then
     PART_2_SAMPLE_RESULT=$(cat "${PART_2_OUTPUT}")
     echo "      Expected result when using sample input is: ${PART_2_SAMPLE_RESULT}"
 else
-    read -p "      Enter the result expected when using the sample input (use '-' if unknown): " PART_2_SAMPLE_RESULT
+    read -r -p "      Enter the result expected when using the sample input (use '-' if unknown): " PART_2_SAMPLE_RESULT
     echo "${PART_2_SAMPLE_RESULT}" > "${PART_2_OUTPUT}"
     echo "      Saved to: ${PART_2_OUTPUT}"
 fi
 echo "  Done"
 
 # python file
-echo "  Seting up python file skeleton"
+echo "  Setting up python file skeleton"
 DAY_SOURCE_DIR=${SOURCE_DIR}/year${YEAR}/day${DAY}
-mkdir -p ${DAY_SOURCE_DIR}
+mkdir -p "${DAY_SOURCE_DIR}"
 
 PYTHON_FILE=${DAY_SOURCE_DIR}/__init__.py
 if [ -f "${PYTHON_FILE}" ]; then
-    echo "    Python file already exitst at ${PYTHON_FILE}, skipping"
+    echo "    Python file already exists at ${PYTHON_FILE}, skipping"
 else
     cat > "${PYTHON_FILE}" <<EOF
 #!/usr/bin/env python
@@ -126,7 +126,7 @@ echo "  Done"
 # test file
 echo "  Setting up test file skeleton"
 YEAR_TEST_DIR=${TEST_DIR}/${YEAR}
-mkdir -p ${YEAR_TEST_DIR}
+mkdir -p "${YEAR_TEST_DIR}"
 
 TEST_FILE="${YEAR_TEST_DIR}/test_day${DAY}.py"
 if [ -f "${TEST_FILE}" ]; then

@@ -20,7 +20,7 @@ while getopts "wd:y:" o; do
             WATCH=1
             ;;
         d)
-            printf -v DAY "%02d" ${OPTARG}
+            printf -v DAY "%02d" "${OPTARG}"
             ;;
         y)
             YEAR=${OPTARG}
@@ -44,5 +44,5 @@ fi
 if [ 1 -eq $WATCH ]; then
     python -m pipenv run ptw --runner "pytest${TEST_TARGET}"
 else
-    python -m pipenv run pytest${TEST_TARGET}
+    python -m pipenv run pytest"${TEST_TARGET}"
 fi

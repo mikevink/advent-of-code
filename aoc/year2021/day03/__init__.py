@@ -52,8 +52,8 @@ def part02(input_file: str) -> str:
             tracker: int = 0
             for c in o2_candidates:
                 tracker += 1 if "1" == lines[c][i] else -1
-            keep: int = "0" if 0 > tracker else "1"
-            # only keep the candidats whos ith bit matches the one determined above
+            keep: str = "0" if 0 > tracker else "1"
+            # only keep the candidates whose ith bit matches the one determined above
             o2_candidates = [c for c in o2_candidates if keep == lines[c][i]]
             # if we only have one candidate left, we have a winner
             if 1 == len(o2_candidates):
@@ -65,8 +65,8 @@ def part02(input_file: str) -> str:
             tracker: int = 0
             for c in co2_candidates:
                 tracker += 1 if "1" == lines[c][i] else -1
-            keep: int = "1" if 0 > tracker else "0"
-            # only keep the candidats whos ith bit matches the one determined above
+            keep: str = "1" if 0 > tracker else "0"
+            # only keep the candidates whose ith bit matches the one determined above
             co2_candidates = [c for c in co2_candidates if keep == lines[c][i]]
             # if we only have one candidate left, we have a winner
             if 1 == len(co2_candidates):
