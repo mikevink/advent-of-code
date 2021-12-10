@@ -5,6 +5,7 @@ from aoc2021 import error
 
 DAY: str = "02"
 
+
 def part01(input_file: str) -> str:
     lines: list[str] = input.load_lines(DAY, input_file)
     position: int = 0
@@ -19,8 +20,9 @@ def part01(input_file: str) -> str:
         elif "down" == modifier:
             depth += value
         else:
-            return error.ERROR 
+            return error.ERROR
     return str(position * depth)
+
 
 def part02(input_file: str) -> str:
     lines: list[str] = input.load_lines(DAY, input_file)
@@ -38,5 +40,5 @@ def part02(input_file: str) -> str:
         elif "down" == modifier:
             aim += value
         else:
-            return error.ERROR 
+            return error.ERROR
     return str(position * depth)

@@ -99,5 +99,5 @@ def part02(input_file: str) -> str:
     return str(scores[len(scores) // 2])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(part02("sample"))

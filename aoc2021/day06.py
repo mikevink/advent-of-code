@@ -5,6 +5,7 @@ from aoc2021 import error
 
 DAY: str = "06"
 
+
 class School:
     def __init__(self, initial: list[int], lifecycle: int, initial_offset: int):
         self.lifecycle: int = lifecycle - 1
@@ -21,7 +22,7 @@ class School:
                 new_timers[self.initial_lifecycle] += self.timers[i]
                 new_timers[self.lifecycle] += self.timers[i]
             else:
-                new_timers[i-1] += self.timers[i]
+                new_timers[i - 1] += self.timers[i]
         self.timers = new_timers
 
     def simulate(self, days: int):
@@ -31,6 +32,7 @@ class School:
     def population(self) -> int:
         return sum(self.timers)
 
+
 def simulation(input_file: str, days: int) -> int:
     school: School = School(input.load_single_csv(DAY, input_file, int), 7, 2)
     school.simulate(days)
@@ -39,6 +41,7 @@ def simulation(input_file: str, days: int) -> int:
 
 def part01(input_file: str) -> str:
     return str(simulation(input_file, 80))
+
 
 def part02(input_file: str) -> str:
     return str(simulation(input_file, 256))

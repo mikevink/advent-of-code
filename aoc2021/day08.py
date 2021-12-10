@@ -15,10 +15,11 @@ NUMBERS: dict[str, str] = {
     "1101111": "6",
     "1010010": "7",
     "1111111": "8",
-    "1111011": "9"
+    "1111011": "9",
 }
 
 EXPECTED: set[str] = set(NUMBERS.keys())
+
 
 def parse(input_file: str) -> list[(list[str], list[str])]:
     lines: list[str] = input.load_lines(DAY, input_file)
@@ -26,7 +27,8 @@ def parse(input_file: str) -> list[(list[str], list[str])]:
     for line in lines:
         patterns, output = line.split(" | ")
         observations.append((patterns.split(" "), output.split(" ")))
-    return observations 
+    return observations
+
 
 def part01(input_file: str) -> str:
     observations: list[(list[str], list[str])] = parse(input_file)
@@ -39,6 +41,7 @@ def part01(input_file: str) -> str:
                 count += 1
     return str(count)
 
+
 def map_patterns(patterns: list[str], mapping: dict[str, int]) -> set[str]:
     maybe: set[str] = set()
     for pattern in patterns:
@@ -48,6 +51,7 @@ def map_patterns(patterns: list[str], mapping: dict[str, int]) -> set[str]:
         maybe.add("".join(array))
     return maybe
 
+
 def map_output(output: list[str], mapping: dict[str, int]) -> int:
     total: str = ""
     for o in output:
@@ -56,6 +60,7 @@ def map_output(output: list[str], mapping: dict[str, int]) -> int:
             array[mapping[c]] = "1"
         total += NUMBERS["".join(array)]
     return int(total)
+
 
 def solve(patterns: list[str], output: list[str]) -> int:
     uniques: dict[str, str] = {}
@@ -69,27 +74,24 @@ def solve(patterns: list[str], output: list[str]) -> int:
     known: set[str] = set()
     # 2 == len(pattern) => pattern represents number 1
     one: list[str] = list(uniques[2])
-    one_options: list[dict[str, int]] = [
-        {one[0]: 2, one[1]: 5}, 
-        {one[0]: 5, one[1]: 2}
-    ]
+    one_options: list[dict[str, int]] = [{one[0]: 2, one[1]: 5}, {one[0]: 5, one[1]: 2}]
     known.update(one)
     # 3 == len(pattern) => pattern represents number 7. seven shares two characters with 1, so we can ignore those, giving us one clear answer
     seven: list[str] = [c for c in uniques[3] if c not in known]
-    seven_value: dict[str, int] = { seven[0]: 0 }
+    seven_value: dict[str, int] = {seven[0]: 0}
     known.update(seven)
     # 4 == len(pattern) => pattern represents number 4. this also shares two characters with 1, but also has two unkwnons. so same pattern
     four: list[str] = [c for c in uniques[4] if c not in known]
     four_options: list[dict[str, int]] = [
         {four[0]: 1, four[1]: 3},
-        {four[0]: 3, four[1]: 1}
+        {four[0]: 3, four[1]: 1},
     ]
     known.update(four)
     # 7 == len(pattern) => finally, we get to number 8. same rigamarole, remove the known ones, speculate on the unknown
     eight: list[str] = [c for c in uniques[7] if c not in known]
     eight_options: list[dict[str, int]] = [
         {eight[0]: 4, eight[1]: 6},
-        {eight[0]: 6, eight[1]: 4}
+        {eight[0]: 6, eight[1]: 4},
     ]
     # now, combine until be get to NUMBERS_ARRAY
     final_number: int = 0
@@ -110,6 +112,7 @@ def solve(patterns: list[str], output: list[str]) -> int:
     if 1 != count:
         raise Exception("we got more than 1 match, abort, abort")
     return final_number
+
 
 def part02(input_file: str) -> str:
     observations: list[(list[str], list[str])] = parse(input_file)

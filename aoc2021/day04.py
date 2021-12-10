@@ -8,6 +8,7 @@ BOARD_SIZE: int = 5
 
 # ASSUMPTION: Per card, all numbers are unique
 
+
 class Board:
     def __init__(self, rows: list[list[int]]):
         # keep track of all the numbers in a board
@@ -25,18 +26,20 @@ class Board:
 
     def call(self, number: int) -> bool:
         if number in self.numbers:
-           i, j = self.numbers.pop(number) 
-           self.per_row[i] += 1
-           self.per_col[j] += 1
-           if (BOARD_SIZE == self.per_row[i]) or (BOARD_SIZE == self.per_col[j]):
-               remainder: int = sum(self.numbers.keys())
-               self.score = number * remainder
-               return True
+            i, j = self.numbers.pop(number)
+            self.per_row[i] += 1
+            self.per_col[j] += 1
+            if (BOARD_SIZE == self.per_row[i]) or (BOARD_SIZE == self.per_col[j]):
+                remainder: int = sum(self.numbers.keys())
+                self.score = number * remainder
+                return True
         return False
+
 
 # takes a line of form `1 2 4 6  5  7` and converts it to [1, 2, 4, 6, 5, 7] (i.e. ignore consecutive spaces)
 def process_line(line: str, separator: str = " ") -> list[int]:
     return [int(l) for l in line.split(separator) if l.strip()]
+
 
 class Bingo:
     def __init__(self, lines: list[str]):
@@ -79,7 +82,8 @@ def part01(input_file: str) -> str:
     bingo: Bingo = Bingo(lines)
     return str(bingo.play())
 
+
 def part02(input_file: str) -> str:
     lines: list[str] = input.load_lines(DAY, input_file)
     bingo: Bingo = Bingo(lines)
-    return str(bingo.play(to_the_end = True))
+    return str(bingo.play(to_the_end=True))

@@ -5,6 +5,7 @@ from aoc2021 import error
 
 DAY: str = "03"
 
+
 def part01(input_file: str) -> str:
     lines: list[str] = input.load_lines(DAY, input_file)
     numbits: int = len(lines[0])
@@ -35,6 +36,7 @@ def part01(input_file: str) -> str:
     print(epsilon)
     power_consumption: int = gamma * epsilon
     return str(power_consumption)
+
 
 def part02(input_file: str) -> str:
     lines: list[str] = input.load_lines(DAY, input_file)
