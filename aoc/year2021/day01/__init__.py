@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-from aoc2021 import input
+from aoc.common import input
 
-DAY: str = "01"
+DAY: str = "2021/01"
 
 
 def part01(input_file: str) -> str:

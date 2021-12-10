@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from aoc2021 import input
-from aoc2021 import error
+from aoc.common import input
+from aoc.common import error
 
-DAY: str = "06"
+DAY: str = "2021/06"
 
 
 class School:

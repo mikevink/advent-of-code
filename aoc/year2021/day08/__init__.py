@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from aoc2021 import input
-from aoc2021 import error
+from aoc.common import input
+from aoc.common import error
 
-DAY: str = "08"
+DAY: str = "2021/08"
 
 NUMBERS: dict[str, str] = {
     "1110111": "0",

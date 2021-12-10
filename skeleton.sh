@@ -3,12 +3,39 @@ set -e
 # get same env variables as python
 source .env
 
-# pad day with 0s
-printf -v DAY "%02d" ${1}
-echo "Setting up skeleton for AOC 2021 Day ${DAY}"
+function usage() {
+    echo "Usage: $0 -d day [-y year]" 1>&2
+    echo "  -d day:  which test day to generate (will be 0 padded if not provided so)"
+    echo "  -y year: which year are we working on (must be yyyy, will default to current year)"
+    exit 1
+}
+
+DAY=""
+YEAR=$(date +'%Y')
+
+while getopts "d:y:" o; do
+    case "${o}" in
+        d)
+            # pad day with 0s
+            printf -v DAY "%02d" ${OPTARG}
+            ;;
+        y)
+            YEAR=${OPTARG}
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+
+if [ "" == "${DAY}" ]; then
+    usage
+fi
+
+echo "Setting up skeleton for AOC ${YEAR} Day ${DAY}"
 
 # make data dir for given day
-DAY_DIR=${DATA_DIR}/${DAY}
+DAY_DIR=${DATA_DIR}/${YEAR}/${DAY}
 echo "  Ensuring data dir is present at ${DAY_DIR}"
 mkdir -p "${DAY_DIR}"
 echo "  Done"
@@ -67,17 +94,20 @@ echo "  Done"
 
 # python file
 echo "  Seting up python file skeleton"
-PYTHON_FILE="${SOURCE_DIR}/day${DAY}.py"
+DAY_SOURCE_DIR=${SOURCE_DIR}/year${YEAR}/day${DAY}
+mkdir -p ${DAY_SOURCE_DIR}
+
+PYTHON_FILE=${DAY_SOURCE_DIR}/__init__.py
 if [ -f "${PYTHON_FILE}" ]; then
     echo "    Python file already exitst at ${PYTHON_FILE}, skipping"
 else
     cat > "${PYTHON_FILE}" <<EOF
 #!/usr/bin/env python
 
-from aoc2021 import input
-from aoc2021 import error
+from aoc.common import input
+from aoc.common import error
 
-DAY: str = "${DAY}"
+DAY: str = "${YEAR}/${DAY}"
 
 
 def part01(input_file: str) -> str:
@@ -95,28 +125,31 @@ echo "  Done"
 
 # test file
 echo "  Setting up test file skeleton"
-TEST_FILE="${TEST_DIR}/test_day${DAY}.py"
+YEAR_TEST_DIR=${TEST_DIR}/${YEAR}
+mkdir -p ${YEAR_TEST_DIR}
+
+TEST_FILE="${YEAR_TEST_DIR}/test_day${DAY}.py"
 if [ -f "${TEST_FILE}" ]; then
     echo "    Test file already exists at ${TEST_FILE}, skipping"
 else
     cat > "${TEST_FILE}" <<EOF
-from aoc2021 import day${DAY}
+from aoc.year${YEAR} import day${DAY}
 
 
-def test_sample_day${DAY}_part01():
+def test_year${YEAR}_day${DAY}_part01_sample():
     assert "${PART_1_SAMPLE_RESULT}" == day${DAY}.part01("sample")
 
 
-def test_input_day${DAY}_part01():
+def test_year${YEAR}_day${DAY}_part01_input():
     result: str = day${DAY}.part01("input")
     print(f"Day ${DAY} Part 01 Result: {result}")
 
 
-def test_sample_day${DAY}_part02():
+def test_year${YEAR}_day${DAY}_part02_sample():
     assert "${PART_2_SAMPLE_RESULT}" == day${DAY}.part02("sample")
 
 
-def test_input_day${DAY}_part02():
+def test_year${YEAR}_day${DAY}_part02_input():
     result: str = day${DAY}.part02("input")
     print(f"Day ${DAY} Part 02 Result: {result}")
 EOF

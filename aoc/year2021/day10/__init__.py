@@ -2,10 +2,10 @@
 
 from collections import deque
 
-from aoc2021 import input
-from aoc2021 import error
+from aoc.common import input
+from aoc.common import error
 
-DAY: str = "10"
+DAY: str = "2021/10"
 
 
 def maxheap(array: list[int], chroot: int, lena: int):
@@ -97,7 +97,3 @@ def part02(input_file: str) -> str:
     scores: list[int] = [completion_score(line) for line in incomplete]
     heapsort(scores)
     return str(scores[len(scores) // 2])
-
-
-if __name__ == "__main__":
-    print(part02("sample"))

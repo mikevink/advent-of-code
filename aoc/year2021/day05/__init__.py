@@ -2,10 +2,10 @@
 
 from collections import namedtuple
 
-from aoc2021 import input
-from aoc2021 import error
+from aoc.common import input
+from aoc.common import error
 
-DAY: str = "05"
+DAY: str = "2021/05"
 
 
 class Point:
@@ -94,7 +94,7 @@ def maximum(a: int, b: int, c: int) -> int:
 
 class Board:
     def __init__(self, lines: str):
-        self.lines: list[Lines] = [Line(l) for l in lines]
+        self.lines: list[Line] = [Line(l) for l in lines]
         self.board: list[list[int]] = []
 
     def init_board(self):

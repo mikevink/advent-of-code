@@ -2,10 +2,10 @@
 
 import math
 
-from aoc2021 import input
-from aoc2021 import error
+from aoc.common import input
+from aoc.common import error
 
-DAY: str = "07"
+DAY: str = "2021/07"
 
 
 def maxheap(array: list[int], chroot: int, lena: int):

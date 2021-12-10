@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-from aoc2021 import input
-from aoc2021 import error
+from aoc.common import input
+from aoc.common import error
 
-DAY: str = "03"
+DAY: str = "2021/03"
 
 
 def part01(input_file: str) -> str:
@@ -32,8 +32,6 @@ def part01(input_file: str) -> str:
     # convert to int
     gamma: int = int(binary_gamma, 2)
     epsilon: int = int(binary_epsilon, 2)
-    print(gamma)
-    print(epsilon)
     power_consumption: int = gamma * epsilon
     return str(power_consumption)
 

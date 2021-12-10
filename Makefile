@@ -1,4 +1,4 @@
-TARGET=aoc2021
+TARGET=aoc
 
 .PHONY: $(TARGET) test testmon ptw
 
@@ -22,8 +22,10 @@ daywatch:
 	bash test.sh -w -d $(DAY)
 
 generate:
-	bash skeleton.sh $(DAY)
+	bash skeleton.sh -d $(DAY)
 
 skeli:
-	bash skeleton.sh $(DAY)
+	bash skeleton.sh -d $(DAY)
 
+format:
+	python -m pipenv run black .
