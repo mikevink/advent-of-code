@@ -1,5 +1,4 @@
-# Advent of Code 2021
+# Advent of Code
 
 Language: Python
-Usually on time
 Simplest solutions I can think of
