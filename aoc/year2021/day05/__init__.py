@@ -3,7 +3,6 @@
 from collections import namedtuple
 
 from aoc.common import input
-from aoc.common import error
 
 DAY: str = "2021/05"
 

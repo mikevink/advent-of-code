@@ -2,8 +2,8 @@
 
 from collections import deque
 
-from aoc.common import input
 from aoc.common import error
+from aoc.common import input
 from aoc.common import sort
 
 DAY: str = "2021/10"

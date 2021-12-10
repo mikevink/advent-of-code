@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from aoc.common import input
-from aoc.common import error
 
 DAY: str = "2021/09"
 
