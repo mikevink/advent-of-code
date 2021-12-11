@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from aoc.common import input
-from aoc.common import error
 
 DAY: str = "2021/11"
 
@@ -14,7 +13,7 @@ def to_array(line: str) -> list[int]:
     return [int(l) for l in line]
 
 
-def flash(array: list[list[int]], i: int, j: int):
+def pulse(array: list[list[int]], i: int, j: int):
     if 0 == array[i][j]:
         return
     array[i][j] = 0
@@ -26,27 +25,24 @@ def flash(array: list[list[int]], i: int, j: int):
                 continue
             array[ni][nj] += 1
             if 9 < array[ni][nj]:
-                flash(array, ni, nj)
+                pulse(array, ni, nj)
 
 
-def print_array(array: list[list[int]], step: int):
-    print(f"At step {step}")
-    for row in array:
-        print("".join(map(str, row)))
-    print("")
+def flash(array: list[list[int]]):
+    for i in range(ROWS):
+        for j in range(COLS):
+            array[i][j] += 1
+    for i in range(ROWS):
+        for j in range(COLS):
+            if 9 < array[i][j]:
+                pulse(array, i, j)
 
 
 def part01(input_file: str, steps: int) -> str:
     array: list[list[int]] = input.load_lines(DAY, input_file, to_array)
     flashes: int = 0
     for step in range(steps):
-        for i in range(ROWS):
-            for j in range(COLS):
-                array[i][j] += 1
-        for i in range(ROWS):
-            for j in range(COLS):
-                if 9 < array[i][j]:
-                    flash(array, i, j)
+        flash(array)
         for row in array:
             for col in row:
                 if 0 == col:
@@ -56,16 +52,9 @@ def part01(input_file: str, steps: int) -> str:
 
 def part02(input_file: str) -> str:
     array: list[list[int]] = input.load_lines(DAY, input_file, to_array)
-    flashes: int = 0
     step: int = 0
     while True:
-        for i in range(ROWS):
-            for j in range(COLS):
-                array[i][j] += 1
-        for i in range(ROWS):
-            for j in range(COLS):
-                if 9 < array[i][j]:
-                    flash(array, i, j)
+        flash(array)
         if 0 == sum([sum(row) for row in array]):
             return str(step + 1)
         step += 1
