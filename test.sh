@@ -44,5 +44,5 @@ fi
 if [ 1 -eq $WATCH ]; then
     python -m pipenv run ptw --runner "pytest${TEST_TARGET}"
 else
-    python -m pipenv run pytest"${TEST_TARGET}"
+    python -m pipenv run pytest${TEST_TARGET}
 fi
