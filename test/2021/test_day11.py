@@ -2,8 +2,7 @@ from aoc.year2021 import day11
 
 
 def test_year2021_day11_part01_sample():
-    assert "204" == day11.part01("sample", 10)
-    #assert "1656" == day11.part01("sample", 100)
+    assert "1656" == day11.part01("sample", 100)
 
 
 def test_year2021_day11_part01_input():
@@ -12,7 +11,7 @@ def test_year2021_day11_part01_input():
 
 
 def test_year2021_day11_part02_sample():
-    assert "-" == day11.part02("sample")
+    assert "195" == day11.part02("sample")
 
 
 def test_year2021_day11_part02_input():
