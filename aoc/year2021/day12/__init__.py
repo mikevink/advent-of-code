@@ -14,26 +14,35 @@ def build_graph(lines: list[str]) -> dict[str, list[str]]:
             graph[nodeA] = []
         if nodeB not in graph:
             graph[nodeB] = []
-        graph[nodeA].append(nodeB)
-        graph[nodeB].append(nodeA)
+        if "end" != nodeA and "start" != nodeB:
+            graph[nodeA].append(nodeB)
+        if "end" != nodeB and "start" != nodeA:
+            graph[nodeB].append(nodeA)
+    # clear the end entry, it ought to be empty
+    del graph["end"]
     return graph
 
-def find_paths(graph: dict[str, list[str]], node: str, path: str, paths: set[str]):
+def find_paths(graph: dict[str, list[str]], node: str, path: str, paths: set[str], twice_allowed: bool):
     if "end" == node and 0 != len(path):
         paths.add(path + "end")
-    for child in graph[node]:
+    for child in graph.get(node, []):
         if child.isupper() or child not in path:
-            find_paths(graph, child, f"{path}{node}-", paths)
+            find_paths(graph, child, f"{path}{node}-", paths, twice_allowed)
+        elif child in path and twice_allowed:
+            find_paths(graph, child, f"{path}{node}-", paths, False)
 
 
 def part01(input_file: str) -> str:
     lines: list[str] = input.load_lines(DAY, input_file)
     graph: dict[str, list[str]] = build_graph(lines)
     paths: set[str] = set()
-    find_paths(graph, "start", "", paths)
+    find_paths(graph, "start", "", paths, twice_allowed=False)
     return str(len(paths))
 
 
 def part02(input_file: str) -> str:
     lines: list[str] = input.load_lines(DAY, input_file)
-    return error.ERROR
+    graph: dict[str, list[str]] = build_graph(lines)
+    paths: set[str] = set()
+    find_paths(graph, "start", "", paths, twice_allowed=True)
+    return str(len(paths))
