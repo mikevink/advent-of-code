@@ -110,12 +110,12 @@ from aoc.common import error
 DAY: str = "${YEAR}/${DAY}"
 
 
-def part01(input_file: str) -> str:
+def part01(input_file: str) -> :
     lines: list[str] = input.load_lines(DAY, input_file)
     return error.ERROR
 
 
-def part02(input_file: str) -> str:
+def part02(input_file: str) -> :
     lines: list[str] = input.load_lines(DAY, input_file)
     return error.ERROR
 EOF
@@ -137,20 +137,20 @@ from aoc.year${YEAR} import day${DAY}
 
 
 def test_year${YEAR}_day${DAY}_part01_sample():
-    assert "${PART_1_SAMPLE_RESULT}" == day${DAY}.part01("sample")
+    assert ${PART_1_SAMPLE_RESULT} == day${DAY}.part01("sample")
 
 
 def test_year${YEAR}_day${DAY}_part01_input():
-    result: str = day${DAY}.part01("input")
+    result: = day${DAY}.part01("input")
     print(f"Day ${DAY} Part 01 Result: {result}")
 
 
 def test_year${YEAR}_day${DAY}_part02_sample():
-    assert "${PART_2_SAMPLE_RESULT}" == day${DAY}.part02("sample")
+    assert ${PART_2_SAMPLE_RESULT} == day${DAY}.part02("sample")
 
 
 def test_year${YEAR}_day${DAY}_part02_input():
-    result: str = day${DAY}.part02("input")
+    result: = day${DAY}.part02("input")
     print(f"Day ${DAY} Part 02 Result: {result}")
 EOF
     echo "    Test file created at ${TEST_FILE}"
