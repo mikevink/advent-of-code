@@ -33,17 +33,17 @@ def find_paths(graph: dict[str, list[str]], node: str, path: str, paths: set[str
             find_paths(graph, child, f"{path}{node}-", paths, False)
 
 
-def part01(input_file: str) -> str:
+def part01(input_file: str) -> int:
     lines: list[str] = input.load_lines(DAY, input_file)
     graph: dict[str, list[str]] = build_graph(lines)
     paths: set[str] = set()
     find_paths(graph, "start", "", paths, twice_allowed=False)
-    return str(len(paths))
+    return len(paths)
 
 
-def part02(input_file: str) -> str:
+def part02(input_file: str) -> int:
     lines: list[str] = input.load_lines(DAY, input_file)
     graph: dict[str, list[str]] = build_graph(lines)
     paths: set[str] = set()
     find_paths(graph, "start", "", paths, twice_allowed=True)
-    return str(len(paths))
+    return len(paths)

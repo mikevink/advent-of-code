@@ -5,7 +5,7 @@ from aoc.common import input
 DAY: str = "2021/01"
 
 
-def part01(input_file: str) -> str:
+def part01(input_file: str) -> int:
     depths: list[int] = input.load_lines(DAY, input_file, int)
     a: int = depths.pop(0)
     increases: int = 0
@@ -13,7 +13,7 @@ def part01(input_file: str) -> str:
         if b > a:
             increases += 1
         a = b
-    return str(increases)
+    return increases
 
 
 def part02(input_file: str) -> str:
@@ -25,4 +25,4 @@ def part02(input_file: str) -> str:
         b: int = depths[i + 1] + depths[i + 2] + depths[i + 3]
         if b > a:
             increases += 1
-    return str(increases)
+    return increases

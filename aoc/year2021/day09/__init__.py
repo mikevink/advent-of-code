@@ -51,10 +51,10 @@ def find_depressions(heightmap: list[list[int]]) -> list[tuple[int, int]]:
     return depressions
 
 
-def part01(input_file: str) -> str:
+def part01(input_file: str) -> int:
     heightmap: list[list[int]] = input.load_lines(DAY, input_file, parse_line)
     depressions: list[tuple[int, int]] = find_depressions(heightmap)
-    return str(sum(map(lambda d: heightmap[d[0]][d[1]] + 1, depressions)))
+    return sum(map(lambda d: heightmap[d[0]][d[1]] + 1, depressions))
 
 
 def ascend(heightmap: list[list[int]], x: int, y: int) -> int:
@@ -76,9 +76,9 @@ def ascend(heightmap: list[list[int]], x: int, y: int) -> int:
     return 1 + count
 
 
-def part02(input_file: str) -> str:
+def part02(input_file: str) -> int:
     heightmap: list[list[int]] = input.load_lines(DAY, input_file, parse_line)
     depressions: list[tuple[int, int]] = find_depressions(heightmap)
     ascents: list[int] = [ascend(heightmap, d[0], d[1]) for d in depressions]
     sascents: list[int] = sorted(ascents)
-    return str(sascents[-3] * sascents[-2] * sascents[-1])
+    return sascents[-3] * sascents[-2] * sascents[-1]

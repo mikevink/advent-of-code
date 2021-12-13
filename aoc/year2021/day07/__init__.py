@@ -8,7 +8,7 @@ from aoc.common import sort
 DAY: str = "2021/07"
 
 
-def part01(input_file: str) -> str:
+def part01(input_file: str) -> int:
     crabs: list[int] = input.load_single_csv(DAY, input_file, int)
     sort.heapsort(crabs)
     lenp: int = len(crabs)
@@ -20,7 +20,7 @@ def part01(input_file: str) -> str:
     fuel: int = 0
     for c in crabs:
         fuel += abs(c - median)
-    return str(fuel)
+    return fuel
 
 
 def mean_fuel(crab: int, mean: int) -> int:
@@ -28,7 +28,7 @@ def mean_fuel(crab: int, mean: int) -> int:
     return (distance * (distance + 1)) // 2
 
 
-def part02(input_file: str) -> str:
+def part02(input_file: str) -> int:
     crabs: list[int] = input.load_single_csv(DAY, input_file, int)
     mean: float = sum(crabs) / len(crabs)
     ceil_mean: int = math.ceil(mean)
@@ -38,4 +38,4 @@ def part02(input_file: str) -> str:
     for c in crabs:
         ceil_fuel += mean_fuel(c, ceil_mean)
         floor_fuel += mean_fuel(c, floor_mean)
-    return str(min(ceil_fuel, floor_fuel))
+    return min(ceil_fuel, floor_fuel)

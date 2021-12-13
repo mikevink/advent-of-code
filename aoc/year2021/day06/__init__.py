@@ -38,9 +38,9 @@ def simulation(input_file: str, days: int) -> int:
     return school.population()
 
 
-def part01(input_file: str) -> str:
-    return str(simulation(input_file, 80))
+def part01(input_file: str) -> int:
+    return simulation(input_file, 80)
 
 
-def part02(input_file: str) -> str:
-    return str(simulation(input_file, 256))
+def part02(input_file: str) -> int:
+    return simulation(input_file, 256)

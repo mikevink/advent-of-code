@@ -40,13 +40,13 @@ def fold(coords: set[tuple[int, int]], at: tuple[str, int]) -> set[tuple[int, in
     return remaining_coords
 
 
-def part01(input_file: str) -> str:
+def part01(input_file: str) -> int:
     coords, folds = parse_input(input_file)
     coords = fold(coords, folds[0])
-    return str(len(coords))
+    return len(coords)
 
 
-def part02(input_file: str) -> list[str]:
+def part02(input_file: str) -> str:
     coords, folds = parse_input(input_file)
     for fold_at in folds:
         coords = fold(coords, fold_at)

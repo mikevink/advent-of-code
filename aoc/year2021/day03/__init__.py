@@ -6,7 +6,7 @@ from aoc.common import input
 DAY: str = "2021/03"
 
 
-def part01(input_file: str) -> str:
+def part01(input_file: str) -> int:
     lines: list[str] = input.load_lines(DAY, input_file)
     numbits: int = len(lines[0])
     tracker: list[int] = [0] * numbits
@@ -33,10 +33,10 @@ def part01(input_file: str) -> str:
     gamma: int = int(binary_gamma, 2)
     epsilon: int = int(binary_epsilon, 2)
     power_consumption: int = gamma * epsilon
-    return str(power_consumption)
+    return power_consumption
 
 
-def part02(input_file: str) -> str:
+def part02(input_file: str) -> int:
     lines: list[str] = input.load_lines(DAY, input_file)
     numbits: int = len(lines[0])
     o2_index: int = -1
@@ -77,4 +77,4 @@ def part02(input_file: str) -> str:
     o2: int = int(lines[o2_index], 2)
     co2: int = int(lines[co2_index], 2)
     life_support: int = o2 * co2
-    return str(life_support)
+    return life_support

@@ -77,13 +77,13 @@ class Bingo:
         raise Exception(error.ERROR)
 
 
-def part01(input_file: str) -> str:
+def part01(input_file: str) -> int:
     lines: list[str] = input.load_lines(DAY, input_file)
     bingo: Bingo = Bingo(lines)
-    return str(bingo.play())
+    return bingo.play()
 
 
-def part02(input_file: str) -> str:
+def part02(input_file: str) -> int:
     lines: list[str] = input.load_lines(DAY, input_file)
     bingo: Bingo = Bingo(lines)
-    return str(bingo.play(to_the_end=True))
+    return bingo.play(to_the_end=True)

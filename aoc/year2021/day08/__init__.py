@@ -29,7 +29,7 @@ def parse(input_file: str) -> list[(list[str], list[str])]:
     return observations
 
 
-def part01(input_file: str) -> str:
+def part01(input_file: str) -> int:
     observations: list[(list[str], list[str])] = parse(input_file)
     count: int = 0
     for observation in observations:
@@ -38,7 +38,7 @@ def part01(input_file: str) -> str:
             l: int = len(o)
             if l in [2, 3, 4, 7]:
                 count += 1
-    return str(count)
+    return count
 
 
 def map_patterns(patterns: list[str], mapping: dict[str, int]) -> set[str]:
@@ -121,4 +121,4 @@ def part02(input_file: str) -> str:
     total: int = 0
     for observation in observations:
         total += solve(observation[0], observation[1])
-    return str(total)
+    return total

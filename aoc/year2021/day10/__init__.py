@@ -32,9 +32,9 @@ def first_error(line: str) -> str:
     return ""
 
 
-def part01(input_file: str) -> str:
+def part01(input_file: str) -> int:
     lines: list[str] = input.load_lines(DAY, input_file)
-    return str(sum([ERROR_POINTS[first_error(line)] for line in lines]))
+    return sum([ERROR_POINTS[first_error(line)] for line in lines])
 
 
 COMPLETION_POINTS: dict[str, int] = {")": 1, "]": 2, "}": 3, ">": 4}
@@ -61,9 +61,9 @@ def completion_score(line: str) -> int:
     return score
 
 
-def part02(input_file: str) -> str:
+def part02(input_file: str) -> int:
     lines: list[str] = input.load_lines(DAY, input_file)
     incomplete: list[str] = [line for line in lines if "" == first_error(line)]
     scores: list[int] = [completion_score(line) for line in incomplete]
     sort.heapsort(scores)
-    return str(scores[len(scores) // 2])
+    return scores[len(scores) // 2]

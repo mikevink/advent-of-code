@@ -124,17 +124,17 @@ class Board:
         return count
 
 
-def part01(input_file: str) -> str:
+def part01(input_file: str) -> int:
     lines: list[str] = input.load_lines(DAY, input_file)
     board: Board = Board(lines)
     board.init_board()
     board.fill(inline=True)
-    return str(board.count_intersections())
+    return board.count_intersections()
 
 
-def part02(input_file: str) -> str:
+def part02(input_file: str) -> int:
     lines: list[str] = input.load_lines(DAY, input_file)
     board: Board = Board(lines)
     board.init_board()
     board.fill(inline=False)
-    return str(board.count_intersections())
+    return board.count_intersections()

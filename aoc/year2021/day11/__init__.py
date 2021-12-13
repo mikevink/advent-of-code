@@ -38,7 +38,7 @@ def flash(array: list[list[int]]):
                 pulse(array, i, j)
 
 
-def part01(input_file: str, steps: int) -> str:
+def part01(input_file: str, steps: int) -> int:
     array: list[list[int]] = input.load_lines(DAY, input_file, to_array)
     flashes: int = 0
     for step in range(steps):
@@ -47,14 +47,14 @@ def part01(input_file: str, steps: int) -> str:
             for col in row:
                 if 0 == col:
                     flashes += 1
-    return str(flashes)
+    return flashes
 
 
-def part02(input_file: str) -> str:
+def part02(input_file: str) -> int:
     array: list[list[int]] = input.load_lines(DAY, input_file, to_array)
     step: int = 0
     while True:
         flash(array)
         if 0 == sum([sum(row) for row in array]):
-            return str(step + 1)
+            return step + 1
         step += 1

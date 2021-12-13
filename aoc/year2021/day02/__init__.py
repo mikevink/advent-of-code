@@ -6,7 +6,7 @@ from aoc.common import input
 DAY: str = "2021/02"
 
 
-def part01(input_file: str) -> str:
+def part01(input_file: str) -> int:
     lines: list[str] = input.load_lines(DAY, input_file)
     position: int = 0
     depth: int = 0
@@ -21,10 +21,10 @@ def part01(input_file: str) -> str:
             depth += value
         else:
             return error.ERROR
-    return str(position * depth)
+    return position * depth
 
 
-def part02(input_file: str) -> str:
+def part02(input_file: str) -> int:
     lines: list[str] = input.load_lines(DAY, input_file)
     position: int = 0
     depth: int = 0
@@ -41,4 +41,4 @@ def part02(input_file: str) -> str:
             aim += value
         else:
             return error.ERROR
-    return str(position * depth)
+    return position * depth
