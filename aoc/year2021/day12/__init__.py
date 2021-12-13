@@ -22,6 +22,7 @@ def build_graph(lines: list[str]) -> dict[str, list[str]]:
     del graph["end"]
     return graph
 
+
 def find_paths(graph: dict[str, list[str]], node: str, path: str, paths: set[str], twice_allowed: bool):
     if "end" == node and 0 != len(path):
         paths.add(path + "end")
