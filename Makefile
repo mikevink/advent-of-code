@@ -27,5 +27,13 @@ generate:
 skeli:
 	bash skeleton.sh -d $(DAY)
 
+edit:
+	bash edit.sh -d $(DAY)
+
+testedit:
+	bash edit.sh -d $(DAY) -t
+
+te: testedit
+
 format:
 	python -m pipenv run black .
