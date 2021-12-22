@@ -39,7 +39,7 @@ def test_year2021_day22_part01_input():
 
 
 def test_year2021_day22_part02_sample():
-    assert 2758514936282235 == day22.part02("sample")
+    assert 2758514936282235 == day22.part02("sample2")
 
 
 def test_year2021_day22_part02_input():

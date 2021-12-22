@@ -50,15 +50,13 @@ class Cuboid:
         pattern: Pattern = re.compile(r"(\w+) x=(-*\d+)..(-*\d+),y=(-*\d+)..(-*\d+),z=(-*\d+)..(-*\d+)")
         result: Match = pattern.search(line)
         return Cuboid(
-            "input",
             1 if "on" == result.group(1) else -1,
             Range(int(result.group(2)), int(result.group(3))),
             Range(int(result.group(4)), int(result.group(5))),
             Range(int(result.group(6)), int(result.group(7))),
         )
 
-    def __init__(self, label: str, state: int, x: Range, y: Range, z: Range):
-        self.label: str = label
+    def __init__(self, state: int, x: Range, y: Range, z: Range):
         self.state: int = state
         self.x: Range = x
         self.y: Range = y
@@ -78,7 +76,7 @@ class Cuboid:
         z: Optional[Range] = self.z.bound(bounds)
         if x is None or y is None or z is None:
             return None
-        return Cuboid("bounded", self.state, x, y, z)
+        return Cuboid(self.state, x, y, z)
 
     def intersect(self, other: 'Cuboid') -> Optional['Cuboid']:
         x: Optional[Range] = self.x.intersect(other.x)
@@ -86,11 +84,11 @@ class Cuboid:
         z: Optional[Range] = self.z.intersect(other.z)
         if x and y and z:
             # reverse the state, to cancel out self
-            return Cuboid("intersection", -1 * self.state, x, y, z)
+            return Cuboid(-1 * self.state, x, y, z)
         return None
 
     def __str__(self) -> str:
-        return f"{{{self.label}: {self.state} {self.x}, {self.y}, {self.z}}}"
+        return f"{{{self.state}: {self.x}, {self.y}, {self.z}}}"
 
     def __repr__(self) -> str:
         return self.__str__()
