@@ -7,7 +7,7 @@ def test_year2021_day22_parsing():
         1, Range(-20, 26), Range(-36, 17), Range(-47, 7)
     ) == Cuboid.parse("on x=-20..26,y=-36..17,z=-47..7")
     assert Cuboid(
-        0, Range(-54112, -39298), Range(-85059, -49293), Range(-27449, 7877)
+        -1, Range(-54112, -39298), Range(-85059, -49293), Range(-27449, 7877)
     ) == Cuboid.parse("off x=-54112..-39298,y=-85059..-49293,z=-27449..7877")
 
 

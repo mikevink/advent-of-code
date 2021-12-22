@@ -13,6 +13,10 @@ class Range:
         self.min: int = min_
         self.max: int = max_
 
+    @property
+    def count(self) -> int:
+        return self.max - self.min + 1
+
     def bound(self, bounds: 'Range') -> Optional['Range']:
         if bounds.max < self.min or bounds.min > self.max:
             return None
@@ -40,41 +44,33 @@ class Range:
         return self.min == other.min and self.max == other.max
 
 
-class Coords:
-    def __init__(self, x: int, y: int, z: int):
-        self.x: int = x
-        self.y: int = y
-        self.z: int = z
-        self.str: str = f"({self.x}, {self.y}, {self.z})"
-        self.hash: int = hash(self.str)
-
-    def __eq__(self, other: 'Coords') -> bool:
-        return self.x == other.x and self.y == other.y and self.z == other.z
-
-    def __hash__(self) -> int:
-        return self.hash
-
-    def __str__(self) -> str:
-        return self.str
-
-
 class Cuboid:
     @staticmethod
     def parse(line: str) -> 'Cuboid':
         pattern: Pattern = re.compile(r"(\w+) x=(-*\d+)..(-*\d+),y=(-*\d+)..(-*\d+),z=(-*\d+)..(-*\d+)")
         result: Match = pattern.search(line)
         return Cuboid(
-            1 if "on" == result.group(1) else 0,
+            "input",
+            1 if "on" == result.group(1) else -1,
             Range(int(result.group(2)), int(result.group(3))),
             Range(int(result.group(4)), int(result.group(5))),
             Range(int(result.group(6)), int(result.group(7))),
         )
 
-    def __init__(self, state: int, x: Range, y: Range, z: Range):
+    def __init__(self, label: str, state: int, x: Range, y: Range, z: Range):
+        self.label: str = label
         self.state: int = state
         self.x: Range = x
         self.y: Range = y
         self.z: Range = z
+
+    @property
+    def count(self) -> int:
+        return self.x.count * self.y.count * self.z.count
+
+    @property
+    def state_changes(self) -> int:
+        return self.state * self.count
 
     def bound(self, bounds: Range) -> Optional['Cuboid']:
         x: Optional[Range] = self.x.bound(bounds)
@@ -82,24 +78,19 @@ class Cuboid:
         z: Optional[Range] = self.z.bound(bounds)
         if x is None or y is None or z is None:
             return None
-        return Cuboid(self.state, x, y, z, )
+        return Cuboid("bounded", self.state, x, y, z)
 
     def intersect(self, other: 'Cuboid') -> Optional['Cuboid']:
         x: Optional[Range] = self.x.intersect(other.x)
         y: Optional[Range] = self.y.intersect(other.y)
         z: Optional[Range] = self.z.intersect(other.z)
         if x and y and z:
-            return Cuboid(other.state, x, y, z)
+            # reverse the state, to cancel out self
+            return Cuboid("intersection", -1 * self.state, x, y, z)
         return None
 
-    def apply(self, reactor: dict[Coords, int]):
-        for x in self.x.range():
-            for y in self.y.range():
-                for z in self.z.range():
-                    reactor[Coords(x, y, z)] = self.state
-
     def __str__(self) -> str:
-        return f"{{{self.state}: {self.x}, {self.y}, {self.z}}}"
+        return f"{{{self.label}: {self.state} {self.x}, {self.y}, {self.z}}}"
 
     def __repr__(self) -> str:
         return self.__str__()
@@ -119,23 +110,20 @@ def filter_cuboids(cuboids: list[Cuboid], bounds: Range) -> list[Cuboid]:
 
 def reboot(cuboids: list[Cuboid]) -> int:
     # this only works because we know the first step is always 'on'
-    on: list[Cuboid] = [cuboids[0]]
-    for cuboid in cuboids[1:]:
-        # we only really care about intersections with off cuboids
-        if 0 == cuboid.state:
-            lenon: int = len(on)
-            for i in range(lenon):
-                if 1 == on[i].state:
-                    intersection: Optional[Cuboid] = on[i].intersect(cuboid)
-                    # only keep the intersections
-                    if intersection:
-                        on.append(intersection)
-        else:
-            on.append(cuboid)
-    reactor: dict[Coords, int] = {}
-    for cuboid in on:
-        cuboid.apply(reactor)
-    return sum(reactor.values())
+    filtered: list[Cuboid] = [cuboids.pop(0)]
+    for cuboid in cuboids:
+        # check the current cuboid against all the ones we've seen so far
+        lenf: int = len(filtered)
+        for i in range(lenf):
+            intersection: Optional[Cuboid] = filtered[i].intersect(cuboid)
+            if intersection:
+                # if we have an intersection, add it to the list
+                # each intersection negates the existing state of the cube, bringing it back to 'off'
+                filtered.append(intersection)
+        # add the current cuboid if it's 'on'
+        if 1 == cuboid.state:
+            filtered.append(cuboid)
+    return sum(map(lambda c: c.state_changes, filtered))
 
 
 def initialise(cuboids: list[Cuboid]) -> int:
@@ -147,5 +135,4 @@ def part01(input_file: str) -> int:
 
 
 def part02(input_file: str) -> int:
-    return 0
-    # return reboot(parse(input_file))
+    return reboot(parse(input_file))
