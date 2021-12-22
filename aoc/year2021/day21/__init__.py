@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from abc import ABC, abstractmethod
 
 from aoc.common import input
 
@@ -34,14 +35,14 @@ class Pawn:
         position: int = wrap(self.position + distance, 10)
         return Pawn(self.first, position, self.score + position + 1)
 
-    def __eq__(self, other: 'Pawn') -> bool:
-        return self.position == other.position and self.score == other.score
-
     def __str__(self) -> str:
         return f"{0 if self.first else 1}@{self.position}={self.score}"
 
     def __hash__(self) -> int:
         return hash(self.__str__())
+
+    def __eq__(self, other: 'Pawn') -> bool:
+        return self.position == other.position and self.score == other.score
 
 
 class Win:
@@ -52,11 +53,11 @@ class Win:
     def __add__(self, other: 'Win') -> 'Win':
         return Win(self.first + other.first, self.second + other.second)
 
-    def multiply(self, factor: int) -> 'Win':
-        return Win(self.first * factor, self.second * factor)
-
     def __eq__(self, other: 'Win') -> bool:
         return self.first == other.first and self.second == other.second
+
+    def multiply(self, factor: int) -> 'Win':
+        return Win(self.first * factor, self.second * factor)
 
 
 class Dirac:
@@ -97,6 +98,11 @@ class Dirac:
 
     def __str__(self) -> str:
         return f"{0 if self.first_turn else 1}: {self.pawns[FIRST]}, {self.pawns[SECOND]}"
+
+    def __eq__(self, other: 'Dirac') -> bool:
+        return self.first_turn == other.first_turn and \
+               self.pawns[FIRST] == other.pawns[FIRST] and \
+               self.pawns[SECOND] == other.pawns[SECOND]
 
     def __hash__(self) -> int:
         return hash(self.__str__())
@@ -148,6 +154,5 @@ def part02(input_file: str) -> int:
     x, y = parse(input_file)
     dirac = Dirac(FIRST, Pawn(FIRST, x, 0), Pawn(SECOND, y, 0))
     history: dict[Dirac, Win] = {}
-    # win: Win = quantum(dirac, history)
-    # return max(win.first, win.second)
-    return 0
+    win: Win = quantum(dirac, history)
+    return max(win.first, win.second)
