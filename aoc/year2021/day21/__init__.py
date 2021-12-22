@@ -108,21 +108,40 @@ class Dirac:
         return hash(self.__str__())
 
 
+class DeterministicDie:
+    def __init__(self):
+        self.roll: int = 1
+
+    def three_rolls(self) -> int:
+        roll: int = 3 * wrap(self.roll, 100, strict=True) + 3
+        self.roll += 3
+        return roll
+
+
 def part01(input_file: str) -> int:
     x, y = parse(input_file)
     dirac: Dirac = Dirac(FIRST, Pawn(FIRST, x, 0), Pawn(SECOND, y, 0))
-    roll: int = 1
+    die: DeterministicDie = DeterministicDie()
     while not dirac.is_won(1000):
-        dirac = dirac.move(3 * wrap(roll, 100, strict=True) + 3)
-        roll += 3
-    return (roll - 1) * dirac.loser().score
+        dirac = dirac.move(die.three_rolls())
+    return (die.roll - 1) * dirac.loser().score
 
 
-def maybe_update(history: dict[Dirac, Win], game: Dirac, win: Win):
-    if game in history:
-        if win != history[game]:
-            raise Exception("kaboom")
-    history[game] = win
+class QuantumDie:
+    def __init__(self):
+        self.rolls: list[int] = [3, 4, 5, 6, 7, 8, 9]
+        self.multipliers: list[int] = [1, 3, 6, 7, 6, 3, 1]
+        self.roll: int = -1
+
+    def three_rolls(self) -> int:
+        self.roll += 1
+        return self.rolls[self.roll]
+
+    def multiplier(self) -> int:
+        return self.multipliers[self.roll]
+
+    def has_rolls(self) -> bool:
+        return self.roll < len(self.rolls) - 1
 
 
 def quantum(game: Dirac, history: dict[Dirac, Win]) -> Win:
@@ -133,17 +152,16 @@ def quantum(game: Dirac, history: dict[Dirac, Win]) -> Win:
         return game.predict_win(27)
 
     win: Win = Win(0, 0)
-    rolls: list[int] = [3, 4, 5, 6, 7, 8, 9]
-    multipliers: list[int] = [1, 3, 6, 7, 6, 3, 1]
+    die: QuantumDie = QuantumDie()
 
-    for i in range(len(rolls)):
-        roll_game: Dirac = game.move(rolls[i])
+    while die.has_rolls():
+        roll_game: Dirac = game.move(die.three_rolls())
         if roll_game.is_won(21):
             roll_win: Win = roll_game.as_win()
         else:
             roll_win: Win = quantum(roll_game, history)
         history[roll_game] = roll_win
-        win += roll_win.multiply(multipliers[i])
+        win += roll_win.multiply(die.multiplier())
 
     history[game] = win
 
