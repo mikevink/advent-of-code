@@ -16,16 +16,16 @@ class Coords:
         self.str: str = f"({self.x}, {self.y}, {self.z})"
         self.hash: int = hash(self.str)
 
-    def manhattan(self, other: 'Coords') -> int:
+    def manhattan(self, other: "Coords") -> int:
         return abs(self.x - other.x) + abs(self.y - other.y) + abs(self.z - other.z)
 
-    def __add__(self, other: 'Coords') -> 'Coords':
+    def __add__(self, other: "Coords") -> "Coords":
         return Coords(self.x + other.x, self.y + other.y, self.z + other.z)
 
-    def __sub__(self, other: 'Coords') -> 'Coords':
+    def __sub__(self, other: "Coords") -> "Coords":
         return Coords(self.x - other.x, self.y - other.y, self.z - other.z)
 
-    def __eq__(self, other: 'Coords') -> bool:
+    def __eq__(self, other: "Coords") -> bool:
         return self.x == other.x and self.y == other.y and self.z == other.z
 
     def __hash__(self) -> int:
@@ -40,27 +40,22 @@ ORIENTATIONS: list[Callable[[Coords], Coords]] = [
     lambda c: Coords(c.x, -c.z, c.y),  # a, -c,  b
     lambda c: Coords(c.x, -c.y, -c.z),  # a, -b, -c
     lambda c: Coords(c.x, c.z, -c.y),  # a,  c, -b
-
     lambda c: Coords(-c.x, -c.y, c.z),  # -a, -b,  c
     lambda c: Coords(-c.x, c.z, c.y),  # -a,  c,  b
     lambda c: Coords(-c.x, c.y, -c.z),  # -a,  b, -c
     lambda c: Coords(-c.x, -c.z, -c.y),  # -a, -c, -b
-
     lambda c: Coords(c.y, -c.x, c.z),  # b, -a,  c
     lambda c: Coords(c.y, c.z, c.x),  # b,  c,  a
     lambda c: Coords(c.y, c.x, -c.z),  # b,  a, -c
     lambda c: Coords(c.y, -c.z, -c.x),  # b, -c, -a
-
     lambda c: Coords(-c.y, c.x, c.z),  # -b,  a,  c
     lambda c: Coords(-c.y, -c.z, c.x),  # -b, -c,  a
     lambda c: Coords(-c.y, -c.x, -c.z),  # -b, -a, -c
     lambda c: Coords(-c.y, c.z, -c.x),  # -b,  c, -a
-
     lambda c: Coords(c.z, c.x, c.y),  # c,  a,  b
     lambda c: Coords(c.z, -c.y, c.x),  # c, -b,  a
     lambda c: Coords(c.z, -c.x, -c.y),  # c, -a, -b
     lambda c: Coords(c.z, c.y, -c.x),  # c,  b, -a
-
     lambda c: Coords(-c.z, -c.x, c.y),  # -c, -a,  b
     lambda c: Coords(-c.z, c.y, c.x),  # -c,  b,  a
     lambda c: Coords(-c.z, c.x, -c.y),  # -c,  a, -b
@@ -83,9 +78,7 @@ class Scanner:
 
 class TrenchMap:
     def __init__(self, root: Scanner):
-        self.scanners: dict[Coords, str] = {
-            Coords(0, 0, 0): root.label
-        }
+        self.scanners: dict[Coords, str] = {Coords(0, 0, 0): root.label}
         self.beacons: set[Coords] = set(root.beacons)
 
     def map(self, scanner: Scanner) -> Optional[Scanner]:

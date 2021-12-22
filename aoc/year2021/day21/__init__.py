@@ -29,7 +29,7 @@ class Pawn:
         self.position: int = position
         self.score: int = score
 
-    def maybe_move(self, first_turn: bool, distance: int) -> 'Pawn':
+    def maybe_move(self, first_turn: bool, distance: int) -> "Pawn":
         if self.first != first_turn:
             return self
         position: int = wrap(self.position + distance, 10)
@@ -41,7 +41,7 @@ class Pawn:
     def __hash__(self) -> int:
         return hash(self.__str__())
 
-    def __eq__(self, other: 'Pawn') -> bool:
+    def __eq__(self, other: "Pawn") -> bool:
         return self.position == other.position and self.score == other.score
 
 
@@ -50,13 +50,13 @@ class Win:
         self.first: int = first
         self.second: int = second
 
-    def __add__(self, other: 'Win') -> 'Win':
+    def __add__(self, other: "Win") -> "Win":
         return Win(self.first + other.first, self.second + other.second)
 
-    def __eq__(self, other: 'Win') -> bool:
+    def __eq__(self, other: "Win") -> bool:
         return self.first == other.first and self.second == other.second
 
-    def multiply(self, factor: int) -> 'Win':
+    def multiply(self, factor: int) -> "Win":
         return Win(self.first * factor, self.second * factor)
 
 
@@ -64,11 +64,11 @@ class Dirac:
     def __init__(self, first_turn: bool, x: Pawn, y: Pawn):
         self.first_turn: bool = first_turn
         self.pawns: dict[bool, Pawn] = {
-            FIRST:  x,
+            FIRST: x,
             SECOND: y,
         }
 
-    def move(self, distance: int) -> 'Dirac':
+    def move(self, distance: int) -> "Dirac":
         return Dirac(
             not self.first_turn,
             self.pawns[FIRST].maybe_move(self.first_turn, distance),
@@ -99,10 +99,12 @@ class Dirac:
     def __str__(self) -> str:
         return f"{0 if self.first_turn else 1}: {self.pawns[FIRST]}, {self.pawns[SECOND]}"
 
-    def __eq__(self, other: 'Dirac') -> bool:
-        return self.first_turn == other.first_turn and \
-               self.pawns[FIRST] == other.pawns[FIRST] and \
-               self.pawns[SECOND] == other.pawns[SECOND]
+    def __eq__(self, other: "Dirac") -> bool:
+        return (
+            self.first_turn == other.first_turn
+            and self.pawns[FIRST] == other.pawns[FIRST]
+            and self.pawns[SECOND] == other.pawns[SECOND]
+        )
 
     def __hash__(self) -> int:
         return hash(self.__str__())

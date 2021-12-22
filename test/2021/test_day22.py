@@ -3,12 +3,10 @@ from aoc.year2021.day22 import Cuboid, Range
 
 
 def test_year2021_day22_parsing():
-    assert Cuboid(
-        1, Range(-20, 26), Range(-36, 17), Range(-47, 7)
-    ) == Cuboid.parse("on x=-20..26,y=-36..17,z=-47..7")
-    assert Cuboid(
-        -1, Range(-54112, -39298), Range(-85059, -49293), Range(-27449, 7877)
-    ) == Cuboid.parse("off x=-54112..-39298,y=-85059..-49293,z=-27449..7877")
+    assert Cuboid(1, Range(-20, 26), Range(-36, 17), Range(-47, 7)) == Cuboid.parse("on x=-20..26,y=-36..17,z=-47..7")
+    assert Cuboid(-1, Range(-54112, -39298), Range(-85059, -49293), Range(-27449, 7877)) == Cuboid.parse(
+        "off x=-54112..-39298,y=-85059..-49293,z=-27449..7877"
+    )
 
 
 def test_year2021_day22_part01_bounding():

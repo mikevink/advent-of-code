@@ -17,14 +17,14 @@ class Range:
     def count(self) -> int:
         return self.max - self.min + 1
 
-    def bound(self, bounds: 'Range') -> Optional['Range']:
+    def bound(self, bounds: "Range") -> Optional["Range"]:
         if bounds.max < self.min or bounds.min > self.max:
             return None
         min_: int = self.min if self.min >= bounds.min else bounds.min
         max_: int = self.max if self.max <= bounds.max else bounds.max
         return Range(min_, max_)
 
-    def intersect(self, other: 'Range') -> Optional['Range']:
+    def intersect(self, other: "Range") -> Optional["Range"]:
         min_: int = max(self.min, other.min)
         max_: int = min(self.max, other.max)
         if 0 <= max_ - min_:
@@ -40,13 +40,13 @@ class Range:
     def __repr__(self) -> str:
         return self.__str__()
 
-    def __eq__(self, other: 'Range') -> bool:
+    def __eq__(self, other: "Range") -> bool:
         return self.min == other.min and self.max == other.max
 
 
 class Cuboid:
     @staticmethod
-    def parse(line: str) -> 'Cuboid':
+    def parse(line: str) -> "Cuboid":
         pattern: Pattern = re.compile(r"(\w+) x=(-*\d+)..(-*\d+),y=(-*\d+)..(-*\d+),z=(-*\d+)..(-*\d+)")
         result: Match = pattern.search(line)
         return Cuboid(
@@ -70,7 +70,7 @@ class Cuboid:
     def state_changes(self) -> int:
         return self.state * self.count
 
-    def bound(self, bounds: Range) -> Optional['Cuboid']:
+    def bound(self, bounds: Range) -> Optional["Cuboid"]:
         x: Optional[Range] = self.x.bound(bounds)
         y: Optional[Range] = self.y.bound(bounds)
         z: Optional[Range] = self.z.bound(bounds)
@@ -78,7 +78,7 @@ class Cuboid:
             return None
         return Cuboid(self.state, x, y, z)
 
-    def intersect(self, other: 'Cuboid') -> Optional['Cuboid']:
+    def intersect(self, other: "Cuboid") -> Optional["Cuboid"]:
         x: Optional[Range] = self.x.intersect(other.x)
         y: Optional[Range] = self.y.intersect(other.y)
         z: Optional[Range] = self.z.intersect(other.z)
@@ -93,7 +93,7 @@ class Cuboid:
     def __repr__(self) -> str:
         return self.__str__()
 
-    def __eq__(self, other: 'Cuboid') -> bool:
+    def __eq__(self, other: "Cuboid") -> bool:
         return self.state == other.state and self.x == other.x and self.y == other.y and self.z == other.z
 
 

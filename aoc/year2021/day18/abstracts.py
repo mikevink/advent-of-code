@@ -3,16 +3,16 @@ from typing import Optional
 
 
 class Node(ABC):
-    def __init__(self, left: Optional['Node'], right: Optional['Node']):
-        self.left: Optional['Node'] = left
-        self.right: Optional['Node'] = right
+    def __init__(self, left: Optional["Node"], right: Optional["Node"]):
+        self.left: Optional["Node"] = left
+        self.right: Optional["Node"] = right
 
     @abstractmethod
-    def leftmost(self) -> 'Node':
+    def leftmost(self) -> "Node":
         pass
 
     @abstractmethod
-    def rightmost(self) -> 'Node':
+    def rightmost(self) -> "Node":
         pass
 
     @abstractmethod
