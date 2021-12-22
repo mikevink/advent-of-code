@@ -4,7 +4,6 @@ from re import Pattern, Match
 from typing import Optional
 
 from aoc.common import input
-from aoc.common import error
 
 DAY: str = "2021/22"
 
@@ -20,6 +19,13 @@ class Range:
         min_: int = self.min if self.min >= bounds.min else bounds.min
         max_: int = self.max if self.max <= bounds.max else bounds.max
         return Range(min_, max_)
+
+    def intersect(self, other: 'Range') -> Optional['Range']:
+        min_: int = max(self.min, other.min)
+        max_: int = min(self.max, other.max)
+        if 0 <= max_ - min_:
+            return Range(min_, max_)
+        return None
 
     def range(self) -> range:
         return range(self.min, self.max + 1)
@@ -78,6 +84,14 @@ class Cuboid:
             return None
         return Cuboid(self.state, x, y, z, )
 
+    def intersect(self, other: 'Cuboid') -> Optional['Cuboid']:
+        x: Optional[Range] = self.x.intersect(other.x)
+        y: Optional[Range] = self.y.intersect(other.y)
+        z: Optional[Range] = self.z.intersect(other.z)
+        if x and y and z:
+            return Cuboid(other.state, x, y, z)
+        return None
+
     def apply(self, reactor: dict[Coords, int]):
         for x in self.x.range():
             for y in self.y.range():
@@ -104,8 +118,22 @@ def filter_cuboids(cuboids: list[Cuboid], bounds: Range) -> list[Cuboid]:
 
 
 def reboot(cuboids: list[Cuboid]) -> int:
+    # this only works because we know the first step is always 'on'
+    on: list[Cuboid] = [cuboids[0]]
+    for cuboid in cuboids[1:]:
+        # we only really care about intersections with off cuboids
+        if 0 == cuboid.state:
+            lenon: int = len(on)
+            for i in range(lenon):
+                if 1 == on[i].state:
+                    intersection: Optional[Cuboid] = on[i].intersect(cuboid)
+                    # only keep the intersections
+                    if intersection:
+                        on.append(intersection)
+        else:
+            on.append(cuboid)
     reactor: dict[Coords, int] = {}
-    for cuboid in cuboids:
+    for cuboid in on:
         cuboid.apply(reactor)
     return sum(reactor.values())
 
