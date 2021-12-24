@@ -108,34 +108,31 @@ class Hallway:
 
 
 class Room:
-    def __init__(self, inx: int):
+    def __init__(self, inx: int, size: int = 2):
         self.inx: int = inx
-        self.top: int = FREE
-        self.bottom: int = FREE
+        self.spaces: list[int] = [FREE] * size
 
     def bottom_ok(self) -> bool:
-        return self.inx == self.bottom
+        return self.inx == self.spaces[-1]
 
     def top_occupied(self) -> bool:
-        return FREE != self.top
+        return FREE != self.spaces[0]
 
     def free(self) -> int:
-        if FREE != self.top:
-            return INVALID
-        if FREE == self.bottom:
-            return BOTTOM
-        if self.inx == self.bottom:
-            return TOP
-        return INVALID
+        free: int = INVALID
+        for i in range(len(self.spaces)):
+            if self.spaces[i] not in {FREE, self.inx}:
+                return INVALID
+            if FREE == self.spaces[i]:
+                free = i + 1
+        return free
 
     def fill(self, x: int, destination: int):
-        if TOP == x:
-            self.top = destination
-        else:
-            self.bottom = destination
+        self.spaces[x - 1] = destination
 
     def __str__(self) -> str:
-        return f"[{SNOITANITSED[self.top]} {SNOITANITSED[self.bottom]}]"
+        repr_s: str = " ".join([SNOITANITSED[s] for s in self.spaces])
+        return f"[{repr_s}]"
 
 
 class Amphipod:
