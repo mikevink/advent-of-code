@@ -1,11 +1,14 @@
 import os
 
 
-def load_lines(day: str, name: str, mapper=None) -> list:
+def load_lines(day: str, name: str, mapper=None, strip: bool = True) -> list:
     data_dir: str = os.getenv("DATA_DIR")
     input_file: str = f"{data_dir}/{day}/{name}.in"
     with open(input_file, "r") as inf:
-        iterable = map(lambda l: l.strip(), inf.readlines())
+        if strip:
+            iterable = map(lambda l: l.strip(), inf.readlines())
+        else:
+            iterable = inf.readlines()
         if mapper is None:
             return list(iterable)
         return list(map(mapper, iterable))
